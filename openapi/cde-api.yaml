@@ -1,0 +1,166 @@
+
+openapi: 3.0.3
+
+info:
+  title: CDE Clinical Documentation API
+  description: API documentation for the fictional CDE clinical documentation platform.
+  version: 1.0.0
+
+servers:
+  - url: https://api.cde-demo.com/v1
+    description: CDE Demo Server
+
+paths:
+  /encounters/{encounterId}:
+    get:
+      summary: Retrieve encounter details
+      description: Retrieves clinical encounter information using the encounter ID.
+      operationId: getEncounter
+
+      parameters:
+        - name: encounterId
+          in: path
+          required: true
+          description: Unique identifier of the clinical encounter.
+          schema:
+            type: string
+          example: ENC1001
+
+      responses:
+        '200':
+          description: Encounter retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Encounter'
+              example:
+                encounterId: ENC1001
+                patientId: PAT1001
+                status: In Progress
+                encounterDate: '2026-11-02'
+
+        '401':
+          description: Authentication failed. A valid access token is required.
+
+        '404':
+          description: The specified encounter was not found.
+
+      security:
+        - bearerAuth: []
+
+  /encounters/{encounterId}/notes:
+    get:
+      summary: Retrieve clinical notes
+      description: Retrieves all clinical notes associated with the specified encounter.
+      operationId: getClinicalNotes
+
+      parameters:
+        - name: encounterId
+          in: path
+          required: true
+          description: Unique identifier of the clinical encounter.
+          schema:
+            type: string
+          example: ENC1001
+
+      responses:
+        '200':
+          description: Clinical notes retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClinicalNote'
+              example:
+                - noteId: NOTE1001
+                  encounterId: ENC1001
+                  noteType: Progress Note
+                  content: Patient reports improvement.
+                  authorId: DOC1001
+                  status: Draft
+                - noteId: NOTE1002
+                  encounterId: ENC1001
+                  noteType: Discharge Summary
+                  content: Patient is ready for discharge.
+                  authorId: DOC1002
+                  status: Draft
+
+        '401':
+          description: Authentication failed. A valid access token is required.
+
+        '404':
+          description: The specified encounter was not found.
+
+      security:
+        - bearerAuth: []
+
+components:
+  schemas:
+    Encounter:
+      type: object
+      description: Represents a clinical encounter.
+      properties:
+        encounterId:
+          type: string
+          description: Unique identifier of the encounter.
+          example: ENC1001
+        patientId:
+          type: string
+          description: Unique identifier of the patient.
+          example: PAT1001
+        status:
+          type: string
+          description: Current status of the encounter.
+          example: In Progress
+        encounterDate:
+          type: string
+          format: date
+          description: Date on which the encounter occurred.
+          example: '2026-11-02'
+      required:
+        - encounterId
+        - patientId
+        - status
+
+    ClinicalNote:
+      type: object
+      description: Represents a clinical note associated with an encounter.
+      properties:
+        noteId:
+          type: string
+          description: Unique identifier of the clinical note.
+          example: NOTE1001
+        encounterId:
+          type: string
+          description: Identifier of the associated encounter.
+          example: ENC1001
+        noteType:
+          type: string
+          description: Type of clinical note.
+          example: Progress Note
+        content:
+          type: string
+          description: Clinical content of the note.
+          example: Patient reports improvement.
+        authorId:
+          type: string
+          description: Unique identifier of the note author.
+          example: DOC1001
+        status:
+          type: string
+          description: Current status of the clinical note.
+          example: Draft
+      required:
+        - noteId
+        - encounterId
+        - noteType
+        - content
+        - authorId
+        - status
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
