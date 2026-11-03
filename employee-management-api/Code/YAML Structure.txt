@@ -1,0 +1,49 @@
+Understand the correct YAML structure
+This is the most important thing to learn from the errors.
+
+Your OpenAPI file has two major sections:
+Root-level structure
+openapi
+
+info
+
+servers
+
+paths
+
+components
+
+These sections are at the same indentation level.
+
+Inside paths
+/employees
+- get
+- post
+/employees/{employeeId}
+
+- get
+
+
+Inside components
+schemas
+- Employee
+- EmployeeInput
+
+
+Notice that get and post are siblings under /employees. Similarly, components is separate from paths.
+3. Validate the corrected file
+1. Copy the complete YAML into Swagger Editor.
+2. Check the editor's error panel.
+3. Confirm that you see all three operations:
+GET /employees
+GET
+
+Retrieve all employees.
+POST /employees
+POST
+
+Create a new employee.
+GET /employees/
+GET
+
+Retrieve an employee by ID.

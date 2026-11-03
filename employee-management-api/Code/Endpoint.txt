@@ -1,0 +1,249 @@
+2. Understand the endpoint
+Our endpoint is:
+/employees/{employeeId}
+
+
+What does {employeeId} mean?
+
+It is a path parameter.
+
+It represents a variable value that the application supplies when making the API request.
+
+For example:
+Endpoint	Employee ID
+/employees/EMP1001	EMP1001
+/employees/EMP1002	EMP1002
+/employees/EMP1003	EMP1003
+
+Why do we use a path parameter?
+
+Because the API needs to know which employee the application wants to retrieve.
+
+Compare our first two endpoints:
+- GET /employees – Retrieves all employees.
+- GET /employees/{employeeId} – Retrieves one specific employee.
+3. Add the second endpoint to YAML
+Open employee-api.yaml.
+
+Under the existing paths section, add this endpoint. Make sure it has the same indentation as /employees.
+  /employees/{employeeId}:
+    get:
+      summary: Retrieve an employee by ID
+      description: Retrieves employee details using the employee ID.
+      operationId: getEmployeeById
+
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          description: Unique identifier of the employee.
+          schema:
+            type: string
+          example: EMP1001
+
+      responses:
+        '200':
+          description: Employee retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+              example:
+                employeeId: EMP1001
+                firstName: John
+                lastName: Smith
+                email: john.smith@example.com
+                department: Engineering
+
+        '404':
+          description: Employee not found.
+
+
+Important: Add this under paths, not under components.
+4. Understand the new YAML elements
+We have already covered get, summary, description, operationId, and responses. Let's focus on the new elements.
+
+A. parameters
+
+Defines the input values that an API operation needs.
+
+In our example, the API needs an employee ID.
+
+B. name: employeeId
+
+Specifies the name of the parameter.
+
+C. in: path
+
+Tells OpenAPI that this parameter is part of the URL path.
+
+Other common parameter locations include:
+Location	Purpose
+path	Value included in the URL path
+query	Optional value added after ? in a URL
+header	Value sent in the HTTP request header
+cookie	Value sent through a cookie
+
+D. required: true
+
+Means the employee ID must be supplied.
+
+A path parameter is always required in OpenAPI.
+
+E. schema: type: string
+
+Specifies that the employee ID is text.
+
+F. example: EMP1001
+
+Provides a sample employee ID so developers understand what value to supply.
+
+G. 404
+
+HTTP status code 404 means the requested employee was not found.
+
+For example, if the application requests EMP9999 and no such employee exists, the API may return this status code.
+5. Validate in Swagger Editor
+You should now see two operations:
+GET /employees
+200
+
+Retrieve all employees.
+
+GET /employees/
+200 / 404
+
+Retrieve an employee by ID.
+
+The second operation should display an employeeId path parameter.
+
+
+Check your understanding
+Before we move to POST, one quick question:
+
+When an application sends this request:
+GET /employees/EMP1002
+
+
+What is EMP1002?
+
+A. A path parameter value
+
+B. An HTTP method
+
+C. A response status code
+
+Check answer
+Once this endpoint is validated, we'll move to POST /employees, where you'll learn about request bodies, an important part of API documentation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+As i understnad this is the output we have got:
+
+GET
+
+/employees/{employeeId}
+
+Retrieve an employee by ID
+
+Jump to path
+
+Retrieves employee details using the employee ID.
+Parameters
+Try it out
+Name	Description		
+employeeId *	string	(path)	
+
+
+Unique identifier of the employee.
+
+Example : EMP1001
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Yes, that's correct! Your understanding is right. Swagger UI is displaying the path parameter we defined in the YAML.
+
+Let's connect the YAML with the output you see.
+Swagger UI output	What it means
+GET	HTTP method used to retrieve information.
+/employees/{employeeId}	API endpoint.
+employeeId *	Required parameter. The asterisk indicates that it is mandatory.
+string	Data type of the parameter.
+(path)	The parameter is part of the URL.
+EMP1001	Example value developers can use.
+
+Let's understand what happens when a developer uses it.
+1. The developer opens the API documentation.
+2. They see that employeeId is required.
+3. They enter EMP1001 in the parameter box.
+4. Swagger constructs the request URL:
+https://api.employee-demo.com/v1/employees/EMP1001
+
+
+5. The application sends this request to the API.
+
+Remember: Swagger displays the request details based on our YAML specification. It does not mean the fictional API server is actually running.
+
+Your second endpoint is documented correctly. Next, we'll create POST /employees and learn how an application sends employee information to an API using a request body.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EMP1001 is used as an example.
+In real life the HR will use a real EMP ID to fetch the data of an emplyee.
+Make it short and easy
+
+
+
+
+
+
+
+
+
+
+
+
+
+Exactly! EMP1001 is just a sample value.
+
+In real life, the HR application will use the employee's actual ID to fetch that employee's details from the API.

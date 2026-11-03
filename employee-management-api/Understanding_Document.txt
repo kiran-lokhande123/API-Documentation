@@ -1,0 +1,62 @@
+End point is actually data that we want to fetch
+
+
+When a developer reads the documentation, they need to know which server to send API requests to. Bases URL used by the developer to retrieve employee information: 
+https://api.employee-demo.com/v1/
+
+For example, if our endpoint is /employees, the complete URL becomes:
+Here, employees is the actual end point.
+https://api.employee-demo.com/v1/employees.
+
+
+===========================
+
+
+paths: {}
+
+This is where we'll define the API endpoints.
+
+Currently, it is empty because we haven't documented any operations yet.
+
+Think of paths as the main section that describes what an API allows an application to do.
+
+===========================
+
+A response body contains the information returned by the API in JSON format.
+
+================================
+
+Why do we use GET?
+Note that GET is a HTTP method.
+
+HTTP provides different methods to tell an API what operation we want to perform.
+
+For our project:
+Method	Meaning
+GET	Retrieve information
+POST	Create information
+PUT	Update information
+DELETE	Delete information
+
+Here, we use GET because we only want to retrieve employee records. We aren't creating or modifying anything.
+=================================
+
+
+
+
+
+
+
+============================
+Step 1: Create the project folder in GitHub
+
+Step 2: Create the YAML file
+
+1. We copied YAML content with OAS standard 3.0 in Swagger Editor. It displays the Base URL and Employee Management API in the Swagger documentation preview.
+
+Step 3: Document GET /employees
+1. Understand what this endpoint does
+
+tep 4: Retrieve an employee by ID
+
+

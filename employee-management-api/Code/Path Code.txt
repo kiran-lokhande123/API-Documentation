@@ -1,0 +1,120 @@
+paths:
+  /employees:
+    get:
+      summary: Retrieve all employees
+      description: Retrieves a list of all employees.
+      operationId: getEmployees
+
+      responses:
+        '200':
+          description: Employees retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+              example:
+                - employeeId: EMP1001
+                  firstName: John
+                  lastName: Smith
+                  email: john.smith@example.com
+                  department: Engineering
+
+                - employeeId: EMP1002
+                  firstName: Sarah
+                  lastName: Williams
+                  email: sarah.williams@example.com
+                  department: Human Resources
+
+=======================================================
+
+4. Understand the new YAML elements
+Let's understand the important parts.
+
+A. get
+
+Defines the HTTP method used by this endpoint.
+
+B. summary
+
+Provides a short description of the operation. Swagger UI displays this prominently.
+
+C. description
+
+Provides additional information about what the endpoint does.
+
+D. operationId
+
+Provides a unique identifier for this API operation.
+
+For example, getEmployees identifies the operation that retrieves all employees. It can also be used by tools that generate client code.
+
+E. responses
+
+Defines what the API returns after processing the request.
+
+Here, we have documented HTTP status code 200.
+
+F. 200
+
+HTTP status code 200 means the request was successful.
+
+G. content
+
+Specifies the format of the response data.
+
+We use:
+application/json:
+
+
+This tells the reader that the response is returned in JSON format.
+
+H. schema
+
+Describes the structure and data types of the response.
+
+We have used:
+type: array
+
+
+Why an array?
+
+Because this endpoint returns multiple employees, not just one employee.
+
+And:
+items:
+  $ref: '#/components/schemas/Employee'
+
+
+This tells OpenAPI that each item in the array follows the Employee schema.
+
+We'll define that schema in our next step.
+
+I. example
+
+Provides sample response data so developers can understand what the API returns.
+
+Validate your work
+Open Swagger Editor and paste the updated YAML.
+
+You should see:
+Employee Management API
+GET
+
+GET /employees
+
+Retrieve all employees
+
+Responses
+200
+Employees retrieved successfully.
+
+The schema reference will resolve after we define the Employee schema.
+
+One important detail: the YAML currently references Employee, but we haven't defined it yet. Swagger may report an unresolved reference. That's expected at this stage; we'll fix it in the next step.
+
+Your task: Add this endpoint, check the YAML indentation, and tell me whether Swagger Editor accepts it.
+
+Next, we'll define the Employee schema and understand how reusable data models work in OpenAPI.
+

@@ -1,0 +1,77 @@
+components:
+  schemas:
+    Employee:
+      type: object
+      description: Represents an employee record.
+      properties:
+        employeeId:
+          type: string
+          description: Unique identifier of the employee.
+          example: EMP1001
+
+        firstName:
+          type: string
+          description: Employee's first name.
+          example: John
+
+        lastName:
+          type: string
+          description: Employee's last name.
+          example: Smith
+
+        email:
+          type: string
+          format: email
+          description: Employee's email address.
+          example: john.smith@example.com
+
+        department:
+          type: string
+          description: Department to which the employee belongs.
+          example: Engineering
+
+      required:
+        - employeeId
+        - firstName
+        - lastName
+        - email
+        - department
+
+================================
+
+Let's fix it: Create the Employee schema
+At the bottom of your YAML file, add the following section.
+
+Make sure components starts at the leftmost position, at the same indentation level as info, servers, and paths.
+
+3. Understand what we created
+YAML element	Purpose
+components	Holds reusable definitions.
+schemas	Holds data structures used by the API.
+Employee	Name of our data structure.
+type: object	Indicates that an employee is represented as an object containing properties.
+properties	Defines the individual employee fields.
+type: string	Specifies that the field contains text.
+format: email	Specifies that the string should follow an email address format.
+required	Identifies fields that must be present.
+
+Why do we need a schema?
+
+Imagine we have five API endpoints that return employee information.
+
+Instead of describing all five employee data structures separately, we define the Employee schema once and reference it wherever needed.
+
+That's the benefit of reusable schemas.
+4. What should happen now?
+After adding the schema, Swagger Editor should resolve the reference.
+GET /employees
+Expected result
+
+- No unresolved reference error.
+- Response code: 200.
+- Response content: application/json.
+- Employee schema displayed in the documentation.
+
+One important distinction: The schema describes the structure of an employee record. The example shows actual sample values for that structure.
+
+Add this section and tell me whether the resolver error disappears. Then we'll move to the second endpoint: GET /employees/{employeeId}.
