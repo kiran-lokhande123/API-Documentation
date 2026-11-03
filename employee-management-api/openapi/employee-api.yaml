@@ -9,4 +9,31 @@ servers:
   - url: https://api.employee-demo.com/v1
     description: Employee Demo Server
 
-paths: {}
+paths:
+  /employees:
+    get:
+      summary: Retrieve all employees
+      description: Retrieves a list of all employees.
+      operationId: getEmployees
+
+      responses:
+        '200':
+          description: Employees retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+              example:
+                - employeeId: EMP1001
+                  firstName: John
+                  lastName: Smith
+                  email: john.smith@example.com
+                  department: Engineering
+
+                - employeeId: EMP1002
+                  firstName: Sarah
+                  lastName: Williams
+                  email: sarah.williams@example.com
+                  department: Human Resources
